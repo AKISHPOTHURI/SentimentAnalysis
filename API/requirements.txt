@@ -1,6 +1,6 @@
 flask
 flask_restx
 flask-dotenv
-# sklearn
+scikit-learn
 keras
 tensorflow
