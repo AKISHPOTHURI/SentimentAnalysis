@@ -10,3 +10,8 @@ model = api.model('Name Model',
                                  description = "Id of the name",
                                  help="Id cannot be black.")       
         	})
+modelarray = api.model('model',
+    {
+        'text': fields.List((fields.String(required = True)))
+	}
+)

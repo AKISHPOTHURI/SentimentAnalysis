@@ -1,7 +1,7 @@
 from flask import request
-from flask_restx import Resource, Namespace
+from flask_restx import Resource, Namespace, reqparse
 
-from .model import model
+from .model import model, modelarray
 from .model_load import load_model
 from .Helpers.texttotokens import testToTokens 
 
@@ -42,15 +42,27 @@ class Sentiment(Resource):
     
 @ns.route("/update")
 class senti(Resource):
-    @ns.expect(model)
+    @ns.expect(modelarray)
     def post(self):
-        list_of_names = {}
         try:
-                    id = request.json['id']
-                    list_of_names[id] = request.json['name']
+                    # texts_parser = reqparse.RequestParser()
+                    model = load_model.load()
+                    print(model.summary())
+                    abc = []
+                    data = request.json['text']
+                    for text in data:
+                          abc.append(text)
+                    print("array:",abc)
+
+                    c = "This is good i have ever ate"
+                    classToken = testToTokens()
+                    padded = classToken.Tokens(c)
+                    result = model.predict(padded)
+                    # print("data",data)
+                    print("result", result)
                     return {
                             "status": "New person added",
-				            "name": list_of_names[id]
+				            "name": "This is a good movie"
                     }
         except KeyError as e:
               ns.abort(500, e.__doc__, status = "Could not save information", statusCode = "500")
