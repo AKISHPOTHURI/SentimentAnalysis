@@ -7,26 +7,31 @@ from .Helpers.texttotokens import testToTokens
 
 ns = Namespace("api")
 
-@ns.route("/hello")
-class Hello(Resource):
+@ns.route("/getdata")
+class Sentiment(Resource):
     def get(self):
+
+        model = load_model.load()
+        print(model.summary())
+        c = "This is good i have ever ate"
+        classToken = testToTokens()
+        padded = classToken.Tokens(c)
+        result = model.predict(padded)
+        print(result[0][0])
         a = [
         {
             'name':"Akish",
-            'age':25
+            'age':25.0
         },
         {
             'name':"Akshith",
-            'age':30
+            'age':30.0
+        },{
+              'name': c,
+              'age': round(result[0][0]*100)
         }
         ]
-        model = load_model.load()
-        print(model.summary())
-        
-        padded = testToTokens.Tokens()
-        result = model.predict(padded)
-        print(result)
-        print("model loaded")
+        # print("model loaded")
         b = []
         for obj in a:
             b.append({
@@ -34,6 +39,9 @@ class Hello(Resource):
                 'age':obj['age']
             })
         return b
+    
+@ns.route("/update")
+class senti(Resource):
     @ns.expect(model)
     def post(self):
         list_of_names = {}
