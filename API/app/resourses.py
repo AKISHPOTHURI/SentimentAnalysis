@@ -13,7 +13,7 @@ class Sentiment(Resource):
 
         model = load_model.load()
         print(model.summary())
-        c = "This is good i have ever ate"
+        c = "It is too spicy. So, the not reach my expectations."
         classToken = testToTokens()
         padded = classToken.Tokens(c)
         result = model.predict(padded)
@@ -48,22 +48,31 @@ class senti(Resource):
                     # texts_parser = reqparse.RequestParser()
                     model = load_model.load()
                     print(model.summary())
+                    classToken = testToTokens()
                     abc = []
                     data = request.json['text']
                     for text in data:
-                          abc.append(text)
+                        abc.append(text)
+                        padded = classToken.Tokens(text)
+                        result = model.predict(padded)
+                        obj = {
+                                'text':text,
+                                'percentage':round(result[0][0]*100),
+                                'sentiment': 1 if round(result[0][0]*100) > 50 else 0
+                          }
+                    print(obj)
                     print("array:",abc)
-
-                    c = "This is good i have ever ate"
-                    classToken = testToTokens()
-                    padded = classToken.Tokens(c)
-                    result = model.predict(padded)
-                    # print("data",data)
-                    print("result", result)
-                    return {
-                            "status": "New person added",
-				            "name": "This is a good movie"
-                    }
+                    print(result)
+                    # c = "This is good i have ever ate"
+                    # padded = classToken.Tokens(c)
+                    # result = model.predict(padded)
+                    # # print("data",data)
+                    # print("result", result)
+                    return obj
+                    # return {
+                    #         "status": "New person added",
+				    #         "name": c
+                    # }
         except KeyError as e:
               ns.abort(500, e.__doc__, status = "Could not save information", statusCode = "500")
         except KeyError as e:
