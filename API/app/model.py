@@ -15,3 +15,9 @@ modelarray = api.model('model',
         'text': fields.List((fields.String(required = True)))
 	}
 )
+
+# Model for file upload response
+upload_response = api.model('UploadResponse', {
+    'message': fields.String(description='Upload status message'),
+    'data': fields.Raw(description='Processed data from uploaded file')
+})

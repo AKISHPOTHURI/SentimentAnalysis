@@ -1,6 +1,8 @@
 flask
 flask_restx
 flask-dotenv
+pandas
+openpyxl
 python-dotenv
 scikit-learn
 keras
