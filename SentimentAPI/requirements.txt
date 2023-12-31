@@ -21,4 +21,5 @@ flask-dotenv
 pandas
 openpyxl
 python-dotenv
+nltk
 -e .
