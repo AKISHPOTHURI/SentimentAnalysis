@@ -1,5 +1,6 @@
 from Sentiment.constants import *
 import string,time
+import os
 from nltk.corpus import stopwords
 from Sentiment import logger
 import nltk
@@ -83,3 +84,6 @@ class DataTransformation:
         sentiData = pd.read_excel(self.config.data_path)
         logger.info(f"Data loaded")
         return sentiData
+    
+    def saveToExcel(self,sentiData):
+            return sentiData.to_excel(os.path.join(self.config.save_path))

@@ -13,11 +13,11 @@ class DataIngestionValidationPipeline:
              data_transformation_config = config.get_data_transformation_config()
              data_transformation = DataTransformation(config=data_transformation_config)
              sentiData = data_transformation.load()
-             data_transformation
-          #    sentiData = data_transformation.shuffle(sentiData)
-          #    sentiData['sentiment'] = sentiData['sentiment'].apply(data_transformation.labelling)
-          #    sentiData['Review'] = sentiData['Review'].apply(data_transformation.removeStopwords)
-          #    sentiData['Review'] = sentiData['Review'].apply(data_transformation.lemmatizeText)
+             sentiData = data_transformation.shuffle(sentiData)
+             sentiData['sentiment'] = sentiData['sentiment'].apply(data_transformation.labelling)
+             sentiData['Review'] = sentiData['Review'].apply(data_transformation.removeStopwords)
+             sentiData['Review'] = sentiData['Review'].apply(data_transformation.lemmatizeText)
+             data_transformation.saveToExcel(sentiData)
 
 if __name__ == "__main__":
     try:
