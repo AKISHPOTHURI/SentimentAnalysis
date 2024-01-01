@@ -1,6 +1,7 @@
 from Sentiment.constants import *
 from Sentiment.utils.common import read_yaml, create_directories
-from Sentiment.entity.config_entity import DataIngestionConfig, DataValidationConfig
+from Sentiment.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig
+from Sentiment import logger
 
 class ConfigurationManager:
     def __init__(
@@ -41,3 +42,16 @@ class ConfigurationManager:
         )
 
         return data_validation_config
+    
+    def get_data_transformation_config(self) -> DataTransformationConfig:
+        config = self.config.data_transformation
+
+        create_directories([config.root_dir])
+
+        data_transformation_config = DataTransformationConfig(
+            root_dir=config.root_present_dir,
+            data_path=config.data_present_path,
+            save_dir=config.root_dir,
+            save_path=config.data_path
+        )
+        return data_transformation_config

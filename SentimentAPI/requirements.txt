@@ -22,4 +22,7 @@ pandas
 openpyxl
 python-dotenv
 nltk
+datasets
+textblob
+emoji
 -e .
