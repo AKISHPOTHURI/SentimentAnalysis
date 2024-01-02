@@ -11,6 +11,7 @@ import pandas as pd
 import sklearn
 from Sentiment.entity.config_entity import DataTransformationConfig
 nltk.download('stopwords')
+nltk.download('wordnet')
 
 class DataTransformation:
     def __init__(self, config: DataTransformationConfig):
