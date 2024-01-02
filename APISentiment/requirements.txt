@@ -23,5 +23,5 @@ openpyxl
 python-dotenv
 scikit-learn
 keras
-boxsdk
+python-box
 -e .
