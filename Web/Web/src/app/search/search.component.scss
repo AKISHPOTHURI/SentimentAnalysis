@@ -1,0 +1,441 @@
+
+
+
+$loader--width: 250px;
+$loader-dot--size: 20px;
+
+.full-container{
+    background: radial-gradient(circle at 18.7% 37.8%, rgb(250, 250, 250) 0%, rgb(225, 234, 238) 90%);
+    height: 100%;
+    min-height: 100vh;
+    background-image: url('./bg1.jpg');
+    background-size: cover;
+}
+
+.background-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  .container {
+    height: 60vh ;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin-top: 10%;
+  }
+.spinner_overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    opacity: 0.2;
+    z-index: 1000;
+}
+
+.loader {
+    height: $loader-dot--size;
+    width: $loader--width;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0; /* Change from 'left: 0' to 'right: 0' */
+    margin: auto;
+    margin-right: 20px;
+
+    &--dot {
+        animation: {
+            name: loader;
+            timing-function: ease-in-out;
+            duration: 3s;
+            iteration-count: infinite;
+        }
+
+        height: $loader-dot--size;
+        width: $loader-dot--size;
+        border-radius: 100%;
+        background-color: black;
+        position: absolute;
+        border: 2px solid white;
+
+        &:first-child {
+            background-color: #8cc759;
+            animation-delay: 0.5s;
+        }
+
+        &:nth-child(2) {
+            background-color: #8c6daf;
+            animation-delay: 0.4s;
+        }
+
+        &:nth-child(3) {
+            background-color: #ef5d74;
+            animation-delay: 0.3s;
+        }
+
+        &:nth-child(4) {
+            background-color: #f9a74b;
+            animation-delay: 0.2s;
+        }
+
+        &:nth-child(5) {
+            background-color: #60beeb;
+            animation-delay: 0.1s;
+        }
+
+        &:nth-child(6) {
+            background-color: #fbef5a;
+            animation-delay: 0s;
+        }
+    }
+
+    &--text {
+        position: absolute;
+        top: 200%;
+        left: 0;
+        right: 0;
+        width: 4rem;
+        margin: auto;
+
+        &:after {
+            content: "Loading";
+            font-weight: bold;
+
+            animation: {
+                name: loading-text;
+                duration: 3s;
+                iteration-count: infinite;
+            }
+
+            ;
+        }
+    }
+}
+
+@keyframes loader {
+    15% {
+        transform: translateX(0);
+    }
+
+    45% {
+        transform: translateX($loader--width - $loader-dot--size );
+    }
+
+    65% {
+        transform: translateX($loader--width - $loader-dot--size );
+    }
+
+    95% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes loading-text {
+    0% {
+        content: "Loading";
+    }
+
+    25% {
+        content: "Loading.";
+    }
+
+    50% {
+        content: "Loading..";
+    }
+
+    75% {
+        content: "Loading...";
+    }
+}
+
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+.form-control-underlined {
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-radius: 5px;
+    padding-left: 0;
+}
+
+.form-control::placeholder {
+    font-size: 0.95rem;
+    color: #aaa;
+    font-style: italic;
+}
+.spinner_overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    opacity: 0.2;
+    z-index: 1000;
+}
+  $black: #000000;
+  $white: #ffffff;
+  $blue: #ff7b00b3;
+  
+  .custom-btn {
+    appearance: none;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    box-shadow: none;
+    border-radius: 25px;
+    // max-height: 50px;
+    padding: 5px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out 0.1s;
+    z-index: 1;
+    span {
+      z-index: 2;
+    }
+    &:before {
+      content: "";
+      position: absolute;
+      background: $blue;
+      z-index: -1;
+    }
+  
+    &.style-01,
+    &.style-01:focus,
+    &.style-01:active,
+    &.style-01:visited {
+      border: 4px solid $blue;
+      background-color: transparent;
+      color: $blue;
+      &:before {
+        width: 0;
+        height: 100%;
+        right: 0;
+        transition: width 0.5s ease-in-out;
+      }
+      &:hover {
+        cursor: pointer;
+        color: $white;
+        &:before {
+          width: 100%;
+          left: 0;
+          right: auto;
+        }
+      }
+    }
+  }
+  
+
+  
+  
+  .input-section, .results-section {
+    width: 50%; /* Adjusted width to account for no space in between */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    position: relative;
+    background-color: white;
+    border-radius: 5px;
+    margin: 5px;
+  }
+
+
+div.btn-container{
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    padding: 10px;
+    float: right;
+}
+
+div.btn-container i{
+    display: inline-block;
+    position: relative;
+    top: -9px;
+}
+
+label {
+    font-size: 13px;
+    color: #424242;
+    font-weight: 500;
+}
+
+.btn-color-mode-switch{
+    display: inline-block;
+    margin: 0px;
+    position: relative;
+}
+
+.btn-color-mode-switch > label.btn-color-mode-switch-inner{
+    margin: 0px;
+    width: 140px;
+    height: 30px;
+    background: goldenrod;
+    border-radius: 26px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+    /*box-shadow: 0px 0px 8px 0px rgba(17, 17, 17, 0.34) inset;*/
+    display: block;
+}
+
+.btn-color-mode-switch > label.btn-color-mode-switch-inner:before{
+    content: attr(data-on);
+    position: absolute;
+    font-size: 12px;
+    font-weight: 500;
+    top: 7px;
+    right: 20px;
+
+}
+
+.btn-color-mode-switch > label.btn-color-mode-switch-inner:after{
+    content: attr(data-off);
+    width: 70px;
+    height: 25px;
+    background: #fff;
+    border-radius: 26px;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0px 0px 6px -2px #111;
+    padding: 4px 0px;
+}
+
+
+
+.btn-color-mode-switch input[type="checkbox"]{
+    cursor: pointer;
+    width: 50px;
+    height: 25px;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    margin: 0px;
+}
+
+.btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner{
+    background: goldenrod;
+    color: black;
+}
+
+.btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:after{
+    content: attr(data-on);
+    left: 68px;
+    background: white;
+}
+
+.btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:before{
+    content: attr(data-off);
+    right: auto;
+    left: 20px;
+}
+
+
+
+.btn-color-mode-switch input[type="checkbox"]:checked ~ .alert{
+    display: block;
+}
+
+/*mode preview*/
+.dark-preview{
+    background: #0d0d0d;
+}
+
+.dark-preview div.btn-container i.fa-sun-o{
+    color: #777;
+}
+
+.dark-preview div.btn-container i.fa-moon-o{
+    color: #fff;
+    text-shadow: 0px 0px 11px #fff;
+}
+
+.white-preview{
+    background: #fff;
+}
+
+.white-preview div.btn-container i.fa-sun-o{
+    color: #ffa500;
+    text-shadow: 0px 0px 16px #ffa500;
+}
+
+.white-preview div.btn-container i.fa-moon-o{
+    color: #777;
+}
+
+
+p.by a{
+    text-decoration: none;
+    color: #000;
+}
+
+.dark-preview p.by a{
+    color: #777;
+}
+
+.white-preview p.by a{
+    color: #000;
+}
+.input_container {
+    border: 1px solid #e5e5e5;
+  }
+  
+  input[type=file]::file-selector-button {
+    background-color: #fff;
+    color: #000;
+    border: 0px;
+    border-right: 1px solid #e5e5e5;
+    padding: 10px 15px;
+    margin-right: 20px;
+    transition: .5s;
+  }
+  
+  input[type=file]::file-selector-button:hover {
+    background-color: #eee;
+    border: 0px;
+    border-radius: 2px;
+    border-right: 1px solid #e5e5e5;
+  }
+  .input_container{
+    margin: 20px;
+    border-radius: 5px;
+  }
+
+  .card{
+    margin-left: 8%;
+    margin-right: 8%;
+  }
+
+
+/* Add these styles for the new button appearance */
+.sample-excel-button {
+    margin-right:auto;
+    float: left;
+    padding: 2px;
+}
+.btn-container {
+    display: flex;
+    align-items: center;
+}
+
+.switch {
+    margin-right: 10px; /* Adjust as needed for spacing */
+}
+.btnexcel {
+   border-radius: 25px;
+   background-color: goldenrod;
+   border-color: goldenrod;
+
+}

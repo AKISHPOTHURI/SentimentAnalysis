@@ -1,0 +1,110 @@
+
+<div class="full-container">
+<div class="background-image">
+    <div class="container">
+        <div class="input-section">
+            <div class="btn-container">
+                <div class="sample-excel-button" *ngIf="showFileUpload">
+                    <a href="/assets/Sample Format.xlsx" download="Sample_Format.xlsx">
+                        <button class="btnexcel">Sample Format</button>
+                    </a>
+                </div>
+                <label class="switch btn-color-mode-switch">
+                    <input type="checkbox" name="color_mode" id="color_mode" value="1" (change)="toggleInputMode()">
+                    <label for="color_mode" data-on="Multiple" data-off="Single"
+                        class="btn-color-mode-switch-inner"></label>
+                </label>
+
+            </div>
+
+            <div class="col-lg-10 mx-auto" style="margin-top: 12%;">
+                <div class="bg-white p-5 rounded shadow" style="height: 230px; width: 525px;">
+                    <form [formGroup]="singleDataForm" (submit)="onLoading(singleDataForm)" *ngIf="!showFileUpload">
+                        <div class="p-1 bg-light" style="border-radius: 42px;">
+                            <div class="input-group">
+                                <textarea type="search" formControlName="text" placeholder="The food here is fabulous!"
+                                    aria-describedby="button-addon1" class="form-control border-0 bg-light"
+                                    style="border-radius: 42px;"></textarea>
+                            </div>
+                        </div><br />
+                        <div class="text-center">
+                            <button class="custom-btn style-01" type="submit"><span>Classify Text</span></button>
+                        </div>
+                    </form>
+                    <div class="file-upload-section" *ngIf="showFileUpload">
+                        <form>
+                            <div class="input_container">
+                                <input type="file" id="fileUpload" (change)="onFileSelected($event)">
+                            </div>
+                        </form>
+                        <div class="text-center">
+                            <button class="custom-btn style-01" (click)="multiple()" type="submit"><span>Classify
+                                    Text</span></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="results-section" style="position: relative;">
+            <ng-container *ngIf="isloading">
+                <div class="loader" style="position: absolute; top: 20%; left: 50%; transform: translate(-50%, -50%);">
+                    <div class="loader--dot"></div>
+                    <div class="loader--dot"></div>
+                    <div class="loader--dot"></div>
+                    <div class="loader--dot"></div>
+                    <div class="loader--dot"></div>
+                    <div class="loader--dot"></div>
+                    <div class="loader--text"></div>
+                </div>
+            </ng-container>
+            <div class="col-lg-10 mx-auto" style="margin-top: 12%;" *ngIf="!isloading && showSingleResponse">
+                <div class="row">
+                    <div class="col">
+                        <h5>Tag</h5>
+                        <p>{{singleDataResult.sentiment===1?'Positive':'Negative'}}</p>
+                    </div>
+                    <div class="col">
+                        <h5>Confidence</h5>
+                        <p>{{singleDataResult.percentage}}</p>
+                    </div>
+                </div>
+                <app-single-response id="charts-container" [inputPercentage]="graphPercentage"></app-single-response>
+            </div>
+            <div class="col-lg-10 mx-auto" style="margin-top: 12%;" *ngIf="!isloading && showBulletComponent">
+                <app-multiple-response [data]="multipleDataResult"></app-multiple-response>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tablecontainer">
+
+    <ngx-skeleton-loader *ngIf="isloading" [count]="getObjectLength(multipleDataResult)"
+        appearance="line"></ngx-skeleton-loader>
+    <div class="card" *ngIf="!isloading && showBulletComponent">
+        <p-table [value]="multipleDataResult" id="htmlData" [tableStyle]="{ 'min-width': '50rem' }">
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="SavePDF()" class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"> Export as Pdf</button>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Data</th>
+                    <th>Status</th>
+                    <th>Graphical Reports</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-getData>
+                <tr>
+                    <td>{{ getData.text }}</td>
+                    <td [ngStyle]="getData.sentiment == '0'? {'color': 'red'}:{'color':'green'}">{{
+                        getData.sentiment===1?'Positive':'Negative'}}</td>
+                    <td><app-single-response [inputPercentage]="getData.Prediction"></app-single-response>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+</div>

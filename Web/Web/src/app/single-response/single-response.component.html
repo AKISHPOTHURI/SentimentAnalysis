@@ -1,0 +1,11 @@
+<ngx-charts-linear-gauge
+  [view]="[500, 100]"
+  [scheme]="colorScheme"
+  [value]="inputPercentage"
+  [previousValue]="50"
+  [min]="0"
+  [max]="100"
+  [units]="''"
+  (select)="onSelect($event)">
+</ngx-charts-linear-gauge>
+
