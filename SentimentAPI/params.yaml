@@ -1,1 +1,18 @@
-key: val
+TrainingArguments:
+  vocab_size: 3000
+  oov_tok: ''
+  embedding_dim: 100
+  max_length: 200 # choose based on statistics, for example 150 to 200
+  padding_type: post
+  trunc_type: post
+  units: 64 #units: The number of hidden units in the layer.
+  hidden_dense: relu
+  last_dense: sigmoid
+  loss: binary_crossentropy
+  optimizer: adam
+  metrics: accuracy
+  num_epochs: 10
+  verbose: 1
+  validation_split: 0.1
+  dense_layers: 24
+  last_layer: 1

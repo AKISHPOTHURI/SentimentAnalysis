@@ -19,4 +19,8 @@ data_transformation:
   data_present_path: artifacts/data_ingestion/SentimentDataFinal.xlsx
   root_dir: artifacts/data_transformation/sentimentDataset
   data_path: artifacts/data_transformation/sentimentDataset/TransformedData.xlsx
-  # ALL_REQUIRED_FILES: ["SentimentDataFinal.xlsx","data.zip"]
+
+model_trainer:
+  data_path: artifacts/data_transformation/sentimentDataset/TransformedData.xlsx
+  root_dir: artifacts/model_trainer
+  model_ckpt: model
