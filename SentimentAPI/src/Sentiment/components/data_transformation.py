@@ -19,7 +19,6 @@ class DataTransformation:
 
     def removePuntuations(self,text):
         punctuation = string.punctuation
-        logger.info(f"Sentence removePuntuations")
         return text.translate(str.maketrans('', '', punctuation))
 
     def removeStopwords(self,text):
@@ -32,7 +31,6 @@ class DataTransformation:
                 newText.append(word)
         x = newText[:]
         newText.clear()
-        logger.info(f"Sentence removeStopwords")
         return " ".join(x)
 
 
@@ -42,7 +40,6 @@ class DataTransformation:
         sentence = ""
         for word in w_tokenizer.tokenize(text):
             sentence = sentence + lemmatizer.lemmatize(word) + " "
-        logger.info(f"Sentence lemmatizeText")
         return sentence
 
     def chatConversion(self,text):
@@ -52,15 +49,12 @@ class DataTransformation:
                 newText.append(chatWords[word.upper()])
             else:
                 newText.append(word)
-        logger.info(f"Sentence chatConversion")
         return " ".join(newText)
 
     def decodeEmoji(self,text):
-        logger.info(f"Sentence decodeEmoji")
         return emoji.demojize(text).replace(":",'').replace("_"," ")
 
     def correctText(self,text):
-        logger.info(f"Sentence correction")
         return TextBlob(text).correct().string
 
     def labelling(self,sentiment):
@@ -72,18 +66,15 @@ class DataTransformation:
             return 1
         elif sentiment == 0:
             return 0
-        logger.info(f"Data shuffled")
         return True
 
     def shuffle(self,sentiData):
         for i in range(50):
             sentiData = sklearn.utils.shuffle(sentiData)
-        logger.info(f"Data shuffled")
         return sentiData
 
     def load(self):
         sentiData = pd.read_excel(self.config.data_path)
-        logger.info(f"Data loaded")
         return sentiData
     
     def saveToExcel(self,sentiData):
