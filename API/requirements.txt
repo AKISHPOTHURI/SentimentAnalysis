@@ -6,4 +6,5 @@ openpyxl
 python-dotenv
 scikit-learn
 keras
+flask_cors
 tensorflow

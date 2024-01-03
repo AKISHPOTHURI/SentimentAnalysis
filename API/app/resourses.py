@@ -54,15 +54,15 @@ class getSentiment(Resource):
                     classToken = testToTokens()
                     abc = []
                     data = request.json['text']
-                    for text in data:
-                        abc.append(text)
-                        padded = classToken.Tokens(text)
-                        result = model.predict(padded)
-                        obj = {
-                                'text':text,
-                                'percentage':round(result[0][0]*100),
-                                'sentiment': 1 if round(result[0][0]*100) > 50 else 0
-                          }
+                    # for text in data:
+                    abc.append(data)
+                    padded = classToken.Tokens(data)
+                    result = model.predict(padded)
+                    obj = {
+                            'text':data,
+                            'percentage':round(result[0][0]*100),
+                            'sentiment': 1 if round(result[0][0]*100) > 50 else 0
+                        }
                     print(obj)
                     print("array:",abc)
                     print(result)

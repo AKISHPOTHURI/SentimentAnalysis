@@ -12,7 +12,8 @@ model = api.model('Name Model',
         	})
 modelarray = api.model('model',
     {
-        'text': fields.List((fields.String(required = True)))
+        # 'text': fields.List((fields.String(required = True)))
+        'text': (fields.String(required = True))
 	}
 )
 
