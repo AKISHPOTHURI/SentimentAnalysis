@@ -25,4 +25,5 @@ nltk
 datasets
 textblob
 emoji
+transformers
 -e .
