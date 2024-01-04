@@ -4,7 +4,7 @@ from Sentiment.config.configuration import ConfigurationManager
 
 STAGE_NAME = "Data Transformation Stage"
 
-class DataIngestionValidationPipeline:
+class DataTransformationPipeline:
     def __init__(self):
          pass
     
@@ -34,7 +34,7 @@ class DataIngestionValidationPipeline:
 if __name__ == "__main__":
     try:
           logger.info(f">>>>>>>>> stage {STAGE_NAME} started <<<<<<<<")
-          obj = DataIngestionValidationPipeline()
+          obj = DataTransformationPipeline()
           obj.main()
           logger.info(f">>>>> stage {STAGE_NAME} completed <<<<<")
     except Exception as e:

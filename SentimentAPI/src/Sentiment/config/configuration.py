@@ -1,6 +1,6 @@
 from Sentiment.constants import *
 from Sentiment.utils.common import read_yaml, create_directories
-from Sentiment.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig
+from Sentiment.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerConfig
 from Sentiment import logger
 
 class ConfigurationManager:
@@ -55,3 +55,34 @@ class ConfigurationManager:
             save_path=config.data_path
         )
         return data_transformation_config
+    
+    def get_model_trainer_config(self) -> ModelTrainerConfig:
+        config = self.config.model_trainer
+        params = self.params.TrainingArguments
+
+        create_directories([config.root_dir])
+
+        model_trainer_config = ModelTrainerConfig(
+            root_dir = config.root_dir,
+            data_path = config.data_path,
+            model_ckpt = config.model_ckpt,
+            vocab_size = params.vocab_size,
+            oov_tok = params.oov_tok,
+            embedding_dim = params.embedding_dim,
+            max_length = params.max_length, # choose based on statistics, for example 150 to 200
+            padding_type =  params.padding_type,
+            trunc_type = params.trunc_type,
+            units = params.units, #units: The number of hidden units in the layer.
+            hidden_dense = params.hidden_dense,
+            last_dense = params.last_dense,
+            loss = params.loss,
+            optimizer = params.optimizer,
+            metrics = params.metrics,
+            num_epochs = params.num_epochs,
+            verbose = params.verbose,
+            validation_split = params.validation_split,
+            dense_layers = params.dense_layers,
+            last_layer = params.last_layer
+        )
+
+        return model_trainer_config
