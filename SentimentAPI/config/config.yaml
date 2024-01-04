@@ -24,3 +24,8 @@ model_trainer:
   data_path: artifacts/data_transformation/sentimentDataset/TransformedData.xlsx
   root_dir: artifacts/model_trainer
   model_ckpt: model
+
+model_evaluation:
+  root_dir: artifacts/model_evaluation
+  METRIC_FILE: artifacts/model_evaluation/metric.txt
+  model: artifacts/model_trainer

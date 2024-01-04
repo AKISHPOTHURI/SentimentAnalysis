@@ -1,6 +1,6 @@
 from Sentiment.constants import *
 from Sentiment.utils.common import read_yaml, create_directories
-from Sentiment.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerConfig
+from Sentiment.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerConfig, ModelEvaluationConfig
 from Sentiment import logger
 
 class ConfigurationManager:
@@ -86,3 +86,16 @@ class ConfigurationManager:
         )
 
         return model_trainer_config
+    
+    def get_model_evaluation_config(self) -> ModelEvaluationConfig:
+        config = self.config.model_evaluation
+
+        create_directories([config.root_dir])
+
+        model_evaluation_config = ModelEvaluationConfig(
+            root_dir = config.root_dir,
+            METRIC_FILE = config.METRIC_FILE,
+            model = config.model
+        )
+
+        return model_evaluation_config

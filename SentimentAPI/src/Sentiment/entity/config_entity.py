@@ -43,3 +43,9 @@ class ModelTrainerConfig:
     validation_split: int
     last_layer: int
     dense_layers: int
+
+@dataclass(frozen=True)
+class ModelEvaluationConfig:
+    root_dir: Path
+    METRIC_FILE: Path
+    model: Path
