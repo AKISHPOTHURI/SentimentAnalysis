@@ -29,3 +29,4 @@ model_evaluation:
   root_dir: artifacts/model_evaluation
   METRIC_FILE: artifacts/model_evaluation/metric.txt
   model: artifacts/model_trainer
+  ALL_REQUIRED_FILES: ["metric.txt"]
