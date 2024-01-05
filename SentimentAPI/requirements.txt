@@ -26,4 +26,7 @@ datasets
 textblob
 emoji
 transformers
+torch
+tqdm
+huggingface_hub
 -e .

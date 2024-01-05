@@ -22,7 +22,6 @@ class ModelTrainer:
         '''
         Converting data to the lowercase
         '''
-        print(data.head())
         data.loc[:, 'Review'] = data.loc[:, 'Review'].str.lower()
         logger.info(f"Data converted to lowercase")
         return data
