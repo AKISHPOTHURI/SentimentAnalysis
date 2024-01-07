@@ -152,6 +152,42 @@ class PredictionPipeline(Resource):
         # sentiment = id2label[idx]
 
         return {'text':text,'sentiment':idx, 'prob':prob}
+    
+@ns.route('/customUploadExcel')
+class customUploadExcel(Resource):
+     @ns.expect(upload_parser)
+     def post(self):
+        args = upload_parser.parse_args()
+        uploaded_file = args['file']
+        result = []
+        self.modelname = 'DistilBertModel'
+        tok = AutoTokenizer.from_pretrained(self.modelname)
+        mod = AutoModelForSequenceClassification.from_pretrained(self.modelname)
+        if uploaded_file:
+            file_path = os.path.join(UPLOAD_FOLDER, uploaded_file.filename)
+            uploaded_file.save(file_path)
+
+            try:
+                 model = load_model.load()
+                 data = pd.read_excel(file_path)
+                 data = data['Reviews'].values
+                #  classToken = testToTokens()
+                 for review in data:
+                      input_ids = tok.encode(review, return_tensors='pt')
+                      output = mod(input_ids)
+                      preds = torch.nn.functional.softmax(output.logits, dim=-1)
+                      prob = torch.max(preds).item()
+                      idx = torch.argmax(preds).item()
+                    #   prediction = model.predict(classToken.Tokens(review))
+                      result.append({
+                            'text':review,
+                            'sentiment':idx,
+                            'percentage': round(prob*100)
+                      })
+                 return {'message': 'File uploaded successfully.', 'result': result}, 200
+            except Exception as e:
+                 return {'error': str(e)}, 500
+        return {'error': 'No file uploaded.'}, 400
 
 # from fastapi import FastAPI
 # import uvicorn
