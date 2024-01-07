@@ -30,3 +30,4 @@ model_evaluation:
   METRIC_FILE: artifacts/model_evaluation/metric.txt
   model: artifacts/model_trainer
   ALL_REQUIRED_FILES: ["metric.txt"]
+  modelname: distilbert_finetuned_setiment

@@ -1,0 +1,179 @@
+import os
+import pathlib
+from flask import request
+from flask_restx import Resource, Namespace, reqparse
+import pandas as pd
+from werkzeug.datastructures import FileStorage
+from flask.views import MethodView
+from api.model import model, modelarray
+from api.model_load import load_model
+from api.textToTokens import testToTokens
+
+from transformers import AutoTokenizer,AutoModelForSequenceClassification
+import torch
+
+from Sentiment.config.configuration import ConfigurationManager
+from Sentiment.pipeline.prediction import PredictionPipeline
+from transformers import AutoTokenizer
+from transformers import pipeline
+
+
+ns = Namespace("api")
+
+@ns.route("/getModelInfo")
+class getModelInfo(Resource):
+    def get(self):
+
+        model = load_model.load()
+        print(model.summary())
+        c = "It is too spicy. So, the not reach my expectations."
+        classToken = testToTokens()
+        padded = classToken.Tokens(c)
+        result = model.predict(padded)
+        print(result[0][0])
+        a = [
+        {
+            'name':"Akish",
+            'age':25.0
+        },
+        {
+            'name':"Akshith",
+            'age':30.0
+        },{
+              'name': c,
+              'age': round(result[0][0]*100)
+        }
+        ]
+        # print("model loaded")
+        b = []
+        for obj in a:
+            b.append({
+                'name':obj['name'],
+                'age':obj['age']
+            })
+        return b
+
+@ns.route("/getSentiment")
+class getSentiment(Resource):
+    @ns.expect(modelarray)
+    def post(self):
+        try:
+                    # texts_parser = reqparse.RequestParser()
+                    data = request.json['text']
+                    model = load_model.load()
+                    # result = PredictionPipeline.prediction("The food is too spicy. Unable to eat this food.")
+                    print(model.summary())
+                    classToken = testToTokens()
+                    abc = []
+                    # for text in data:
+                    abc.append(data)
+                    padded = classToken.Tokens(data)
+                    result = model.predict(padded)
+                    obj = {
+                            'text':data,
+                            'percentage':round(result[0][0]*100),
+                            'sentiment': 1 if round(result[0][0]*100) > 50 else 0
+                        }
+                    print(obj)
+                    print("array:",abc)
+                    print(result)
+                    # c = "This is good i have ever ate"
+                    # padded = classToken.Tokens(c)
+                    result = model.predict(padded)
+                    # print("data",data)
+                    print("result", result)
+                    return obj,200
+                    # return {
+                    #         "status": "New person added",
+				    #         "name": c
+                    # }
+        except KeyError as e:
+              ns.abort(500, e.__doc__, status = "Could not save information", statusCode = "500")
+        except KeyError as e:
+              ns.abort(400, e.__doc__, status = "Could not save information", statusCode = "400")
+
+# app = CreateApp()
+# # Create a directory for file uploads
+UPLOAD_FOLDER = 'uploads'
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+# Configuring the upload location for files using Flask's config
+# File upload parser
+upload_parser = ns.parser()
+upload_parser.add_argument('file', location='files', type=FileStorage, required=True)
+
+
+@ns.route('/UploadExcel')
+class uploadExcel(Resource):
+     @ns.expect(upload_parser)
+     def post(self):
+        args = upload_parser.parse_args()
+        uploaded_file = args['file']
+        result = []
+        if uploaded_file:
+            file_path = os.path.join(UPLOAD_FOLDER, uploaded_file.filename)
+            uploaded_file.save(file_path)
+
+            try:
+                 model = load_model.load()
+                 data = pd.read_excel(file_path)
+                 data = data['Reviews'].values
+                 classToken = testToTokens()
+                 for review in data:
+                      prediction = model.predict(classToken.Tokens(review))
+                      result.append({
+                            'text':review,
+                            'Prediction':round(prediction[0][0]*100),
+                            'sentiment': 1 if round(prediction[0][0]*100) > 50 else 0
+                      })
+                 return {'message': 'File uploaded successfully.', 'result': result}, 200
+            except Exception as e:
+                 return {'error': str(e)}, 500
+        return {'error': 'No file uploaded.'}, 400
+
+@ns.route('/Custompredict')
+class PredictionPipeline(Resource):
+    # def __init__(self):
+    #     self.config = ConfigurationManager().get_model_evaluation_config()
+
+    @ns.expect(modelarray)
+    def post(self):
+        # self.config = ConfigurationManager().get_model_evaluation_config()
+        self.modelname = 'DistilBertModel'
+        text = request.json['text']
+        tok = AutoTokenizer.from_pretrained(self.modelname)
+        mod = AutoModelForSequenceClassification.from_pretrained(self.modelname)
+        input_ids = tok.encode(text, return_tensors='pt')
+        output = mod(input_ids)
+        preds = torch.nn.functional.softmax(output.logits, dim=-1)
+        prob = torch.max(preds).item()
+        idx = torch.argmax(preds).item()
+        # sentiment = id2label[idx]
+
+        return {'text':text,'sentiment':idx, 'prob':prob}
+
+# from fastapi import FastAPI
+# import uvicorn
+# import sys
+# import os
+# from fastapi.templating import Jinja2Templates
+# from starlette.responses import RedirectResponse
+# from fastapi.responses import Response
+# from Sentiment.pipeline.prediction import PredictionPipeline
+
+# app = FastAPI()
+
+# @app.post("/predict")
+# async def predict_route(text):
+#     try:
+
+#         obj = PredictionPipeline()
+#         text = obj.predict(text)
+#         return text
+#     except Exception as e:
+#         raise e
+
+
+# if __name__=="__main__":
+#     uvicorn.run(app, host="0.0.0.0", port=8080)
