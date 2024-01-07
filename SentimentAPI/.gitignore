@@ -161,3 +161,4 @@ cython_debug/
 
 artifacts/*
 DistilBertModel/*
+distilbert_finetuned_setiment/*
