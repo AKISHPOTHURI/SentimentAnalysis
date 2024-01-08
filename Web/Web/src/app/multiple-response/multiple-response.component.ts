@@ -38,7 +38,7 @@ export class MultipleResponseComponent implements OnInit {
   ngOnInit(): void {
 
     let totalItems = this.data.length;
-    console.log(this.data);
+    console.log("Data:",this.data);
     
     this.sentimentCounts = this.data.reduce((totals: { [key: number]: number }, item) => {
       if (item.sentiment === 1 || item.sentiment === 0) {
@@ -46,7 +46,7 @@ export class MultipleResponseComponent implements OnInit {
       }
       return totals;
     }, { 0: 0, 1: 0 });
-
+    console.log("sentimentCounts",this.sentimentCounts);
     for (let sentiment in this.sentimentCounts) {
       this.sentimentCounts[sentiment] = (this.sentimentCounts[sentiment] / totalItems) * 100;
     }

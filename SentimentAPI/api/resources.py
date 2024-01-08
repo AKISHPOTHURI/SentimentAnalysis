@@ -168,10 +168,8 @@ class customUploadExcel(Resource):
             uploaded_file.save(file_path)
 
             try:
-                 model = load_model.load()
-                 data = pd.read_excel(file_path)
+ 
                  data = data['Reviews'].values
-                #  classToken = testToTokens()
                  for review in data:
                       input_ids = tok.encode(review, return_tensors='pt')
                       output = mod(input_ids)
@@ -189,27 +187,3 @@ class customUploadExcel(Resource):
                  return {'error': str(e)}, 500
         return {'error': 'No file uploaded.'}, 400
 
-# from fastapi import FastAPI
-# import uvicorn
-# import sys
-# import os
-# from fastapi.templating import Jinja2Templates
-# from starlette.responses import RedirectResponse
-# from fastapi.responses import Response
-# from Sentiment.pipeline.prediction import PredictionPipeline
-
-# app = FastAPI()
-
-# @app.post("/predict")
-# async def predict_route(text):
-#     try:
-
-#         obj = PredictionPipeline()
-#         text = obj.predict(text)
-#         return text
-#     except Exception as e:
-#         raise e
-
-
-# if __name__=="__main__":
-#     uvicorn.run(app, host="0.0.0.0", port=8080)
