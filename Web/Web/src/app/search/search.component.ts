@@ -24,7 +24,7 @@ export class SearchComponent implements OnInit {
   givenData: any;
   singleDataResult: any = {
     sentiment: 1, 
-    percentage: 75, 
+    prob: 75, 
   };  
   fileValue: any;
   multipleDataResult: any;
@@ -56,11 +56,15 @@ export class SearchComponent implements OnInit {
     this.isloading = true;
 
     this._service.sendSingleResponse(form.value).subscribe((value: any) => {
+      console.log(value);
+      
       this.singleDataResult=value
       this.isloading = false
     this.showSingleResponse = true;
     this.showBulletComponent = false;
-    this.graphPercentage = this.singleDataResult.percentage;
+    this.graphPercentage = this.singleDataResult.prob * 100;
+    console.log(value.sentiment);
+    
 
     },
     (error) => {

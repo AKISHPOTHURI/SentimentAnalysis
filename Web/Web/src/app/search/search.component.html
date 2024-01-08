@@ -66,10 +66,10 @@
                     </div>
                     <div class="col">
                         <h5>Confidence</h5>
-                        <p>{{singleDataResult.percentage}}</p>
+                        <p>{{singleDataResult.prob}}</p>
                     </div>
                 </div>
-                <app-single-response id="charts-container" [inputPercentage]="graphPercentage"></app-single-response>
+                <app-single-response id="charts-container" [inputPercentage]="graphPercentage" [inputSentiment]="singleDataResult.sentiment"></app-single-response>
             </div>
             <div class="col-lg-10 mx-auto" style="margin-top: 12%;" *ngIf="!isloading && showBulletComponent">
                 <app-multiple-response [data]="multipleDataResult"></app-multiple-response>
@@ -100,7 +100,7 @@
                     <td>{{ getData.text }}</td>
                     <td [ngStyle]="getData.sentiment == '0'? {'color': 'red'}:{'color':'green'}">{{
                         getData.sentiment===1?'Positive':'Negative'}}</td>
-                    <td><app-single-response [inputPercentage]="getData.Prediction"></app-single-response>
+                    <td><app-single-response [inputPercentage]="getData.percentage" [inputSentiment]="getData.sentiment"></app-single-response>
                     </td>
                 </tr>
             </ng-template>

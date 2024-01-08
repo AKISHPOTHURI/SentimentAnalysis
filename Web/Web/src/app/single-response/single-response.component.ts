@@ -17,7 +17,7 @@ export class SingleResponseComponent implements OnInit{
   //   };
   // }
   @Input() inputPercentage: number = 0; 
-
+  @Input() inputSentiment!:number
   resposneValue:any
   backgroundColor:any = []; 
   gaugeValue!: number;
@@ -34,8 +34,9 @@ export class SingleResponseComponent implements OnInit{
   ngOnInit(): void {  
     const red = '#A10A28';
     const green = '#5AA454';
-  
-    if (this.inputPercentage < 50) {
+    console.log(this.inputSentiment);
+
+    if (this.inputSentiment===0) {      
       this.backgroundColor.push(red);
     } else {
       this.backgroundColor.push(green);

@@ -16,13 +16,13 @@ export class AnalysisService {
   sendSingleResponse(singleData$:any):Observable<any>{
     const headers = { 'content-type': 'application/json'} 
     console.log(singleData$);
-    return this.http.post<any>("http://127.0.0.1:5000/api/getSentiment",singleData$,{'headers':headers})
+    return this.http.post<any>("http://127.0.0.1:5000/api/Custompredict",singleData$,{'headers':headers})
   }
 
   sendMultipleResponse(file: File):Observable<any>{
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
     console.log(formData);
-    return this.http.post<any>("http://127.0.0.1:5000/api/UploadExcel",formData)
+    return this.http.post<any>("http://127.0.0.1:5000/api/customUploadExcel",formData)
   }
 }
