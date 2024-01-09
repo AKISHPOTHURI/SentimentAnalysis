@@ -58,14 +58,11 @@ class ModelEvaluation:
         '''
         try:
             accuracyScore = metrics.accuracy_score(testLabels,predictions)
-            recallScore = metrics.recall_score(testLabels,predictions)
-            precisionScore = metrics.precision_score(testLabels,predictions)
-            f1Score = metrics.f1_score(testLabels,predictions)
-            return accuracyScore,recallScore,precisionScore,f1Score
+            return accuracyScore
         except Exception as e:
             raise e
         
-    def ModelEvaluationStatus(self,accuracyScore,recallScore,precisionScore,f1Score) -> bool:
+    def ModelEvaluationStatus(self,accuracyScore) -> bool:
         '''
         storing the metrics results in a text file
         '''

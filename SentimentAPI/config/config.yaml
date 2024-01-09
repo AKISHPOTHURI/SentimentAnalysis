@@ -28,7 +28,6 @@ model_trainer:
 model_evaluation:
   root_dir: artifacts/model_evaluation
   METRIC_FILE: artifacts/model_evaluation/metric.txt
-  STATUS_FILE: metric.txt
   model: artifacts/model_trainer
   ALL_REQUIRED_FILES: ["model_evaluation"]
-  modelname: DistilBertModel
+  # modelname: DistilBertModel

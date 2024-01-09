@@ -37,9 +37,9 @@ class ModelEvaluationPipeline:
             prediction = model_evaluation_config.sentimentClassify(predictions)
             logger.info(f"Predicting classification Completed")
             logger.info(f"EvaluationMetrics Started")
-            accuracyScore,recallScore,precisionScore,f1Score = model_evaluation_config.EvaluationMetrics(prediction,testLabels)
+            accuracyScore = model_evaluation_config.EvaluationMetrics(prediction,testLabels)
             logger.info(f"EvaluationMetrics Completed")
-            model_evaluation_config.ModelEvaluationStatus(accuracyScore,recallScore,precisionScore,f1Score)
+            model_evaluation_config.ModelEvaluationStatus(accuracyScore)
             logger.info(f"EvaluationMetrics Saved")
 
 if __name__ == "__main__":
