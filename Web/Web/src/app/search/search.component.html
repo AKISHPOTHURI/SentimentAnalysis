@@ -66,7 +66,7 @@
                     </div>
                     <div class="col">
                         <h5>Confidence</h5>
-                        <p>{{singleDataResult.prob}}</p>
+                        <p>{{singleDataResult.prob*100}}</p>
                     </div>
                 </div>
                 <app-single-response id="charts-container" [inputPercentage]="graphPercentage" [inputSentiment]="singleDataResult.sentiment"></app-single-response>

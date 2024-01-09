@@ -24,7 +24,7 @@ export class SearchComponent implements OnInit {
   givenData: any;
   singleDataResult: any = {
     sentiment: 1, 
-    prob: 75, 
+    prob: 0.75, 
   };  
   fileValue: any;
   multipleDataResult: any;

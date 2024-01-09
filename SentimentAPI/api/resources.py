@@ -151,7 +151,7 @@ class PredictionPipeline(Resource):
         idx = torch.argmax(preds).item()
         # sentiment = id2label[idx]
 
-        return {'text':text,'sentiment':idx, 'prob':prob}
+        return {'text':text,'sentiment':idx, 'prob':round(prob,3)}
     
 @ns.route('/customUploadExcel')
 class customUploadExcel(Resource):
@@ -168,9 +168,10 @@ class customUploadExcel(Resource):
             uploaded_file.save(file_path)
 
             try:
- 
-                 data = data['Reviews'].values
-                 for review in data:
+                 data = pd.read_excel(file_path)
+                 dataValues = data['Reviews'].values
+                 print(data)
+                 for review in dataValues:
                       input_ids = tok.encode(review, return_tensors='pt')
                       output = mod(input_ids)
                       preds = torch.nn.functional.softmax(output.logits, dim=-1)
