@@ -57,10 +57,10 @@ class ModelEvaluation:
         Finding evaluation metrics
         '''
         try:
-            accuracyScore = metrics.accuracy_score(testLabels,predictions,average='weighted',zero_division=0)
-            recallScore = metrics.recall_score(testLabels,predictions,average='weighted',zero_division=0)
-            precisionScore = metrics.precision_score(testLabels,predictions,average='weighted',zero_division=0)
-            f1Score = metrics.f1_score(testLabels,predictions,average='weighted',zero_division=0)
+            accuracyScore = metrics.accuracy_score(testLabels,predictions)
+            recallScore = metrics.recall_score(testLabels,predictions)
+            precisionScore = metrics.precision_score(testLabels,predictions)
+            f1Score = metrics.f1_score(testLabels,predictions)
             return accuracyScore,recallScore,precisionScore,f1Score
         except Exception as e:
             raise e
@@ -72,23 +72,19 @@ class ModelEvaluation:
         try:
             Evaluation_status = None
 
-            all_files = os.listdir(os.path.join("artifacts","model_evaluation"))
-    
-            for file in all_files:
-                if file not in self.config.ALL_REQUIRED_FILES:
-                    Evaluation_status = False
-                    with open(self.config.STATUS_FILE, 'w') as f:
-                        f.write(f"Evaluation status: {Evaluation_status}")
-                else:
-                    Evaluation_status = True
-                    
-                    with open(self.config.STATUS_FILE, 'w') as f:
-                        f.write(f"Evaluation status: {Evaluation_status}"+",")
-                        f.write(f"accuracyScore: {accuracyScore}"+",")
-                        f.write(f"recallScore: {recallScore}"+",")
-                        f.write(f"precisionScore: {precisionScore}"+",")
-                        f.write(f"f1Score: {f1Score}"+",")
-
+            # all_files = os.listdir(os.path.join("artifacts","model_evaluation"))
+            # print(all_files)
+            # for file in all_files:
+            if accuracyScore == None:
+                Evaluation_status = False
+                with open(self.config.METRIC_FILE, 'w') as f:
+                    f.write(f"Evaluation status: {Evaluation_status}")
+            else:
+                Evaluation_status = True
+                
+                with open(self.config.METRIC_FILE, 'w') as f:
+                    f.write(f"Evaluation status: {Evaluation_status}"+",")
+                    f.write(f"accuracyScore: {accuracyScore}"+",")
             return Evaluation_status
         
         except Exception as e:

@@ -170,14 +170,12 @@ class customUploadExcel(Resource):
             try:
                  data = pd.read_excel(file_path)
                  dataValues = data['Reviews'].values
-                 print(data)
                  for review in dataValues:
                       input_ids = tok.encode(review, return_tensors='pt')
                       output = mod(input_ids)
                       preds = torch.nn.functional.softmax(output.logits, dim=-1)
                       prob = torch.max(preds).item()
                       idx = torch.argmax(preds).item()
-                    #   prediction = model.predict(classToken.Tokens(review))
                       result.append({
                             'text':review,
                             'sentiment':idx,

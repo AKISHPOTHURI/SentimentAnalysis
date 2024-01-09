@@ -49,4 +49,4 @@ class ModelEvaluationConfig:
     root_dir: Path
     METRIC_FILE: Path
     model: Path
-    name:str
+    STATUS_FILE:Path

@@ -95,7 +95,8 @@ class ConfigurationManager:
         model_evaluation_config = ModelEvaluationConfig(
             root_dir = config.root_dir,
             METRIC_FILE = config.METRIC_FILE,
-            model = config.model
+            model = config.model,
+            STATUS_FILE = config.STATUS_FILE
         )
 
         return model_evaluation_config
