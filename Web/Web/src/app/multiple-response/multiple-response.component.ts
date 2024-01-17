@@ -1,7 +1,5 @@
-import { Component, OnInit,Input  } from '@angular/core';
-import { Color, LegendPosition, ScaleType } from '@swimlane/ngx-charts';
-
-
+import { Component, OnInit, Input } from '@angular/core';
+import { Color, ScaleType } from '@swimlane/ngx-charts';
 
 
 @Component({
@@ -23,11 +21,11 @@ export class MultipleResponseComponent implements OnInit {
   showLabels: boolean = true;
   isDoughnut: boolean = false;
 
+  // Color scheme for ngx-charts, initialized with specific color codes.
   colorScheme: Color = {
     name: 'myScheme',
     selectable: true,
     group: ScaleType.Ordinal,
-
     domain: ['#A10A28', '#5AA454']
   };
   pieChartLabel: any;
@@ -35,18 +33,26 @@ export class MultipleResponseComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit(): void {
 
+  /**
+ * The ngOnInit function is part of the Angular lifecycle hooks and is executed when the component is initialized.
+ * It performs the following tasks:
+ * - Calculates the total number of items in the provided data array.
+ * - Initializes the sentimentCounts object to store the count of each sentiment (0 and 1).
+ * - Uses the reduce function to iterate over the data array and update sentimentCounts with the count of each sentiment.
+ * - Calculates the percentage of each sentiment based on the total number of items.
+ * - Converts the sentimentCounts object into an array suitable for ngx-charts.
+ * Output: Updates the sentimentCounts and multiple properties with the calculated values.
+ */
+
+  ngOnInit(): void {
     let totalItems = this.data.length;
-    console.log("Data:",this.data);
-    
     this.sentimentCounts = this.data.reduce((totals: { [key: number]: number }, item) => {
       if (item.sentiment === 1 || item.sentiment === 0) {
         totals[item.sentiment] = (totals[item.sentiment] || 0) + 1;
       }
       return totals;
     }, { 0: 0, 1: 0 });
-    console.log("sentimentCounts",this.sentimentCounts);
     for (let sentiment in this.sentimentCounts) {
       this.sentimentCounts[sentiment] = (this.sentimentCounts[sentiment] / totalItems) * 100;
     }
@@ -54,21 +60,31 @@ export class MultipleResponseComponent implements OnInit {
       name: sentiment === '1' ? 'Positive' : 'Negative',
       value: this.sentimentCounts[sentiment]
     }));
-    console.log(this.multiple);
-    
   }
 
-
-
+  /**
+     * onSelect function logs the clicked item's data to the console.
+     * @param data - The data of the clicked item.
+     * Output: Logs the clicked item's data to the console.
+     */
   onSelect(data: any): void {
-
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }
 
+  /**
+     * onActivate function logs the activation event data to the console.
+     * @param data - The activation event data.
+     * Output: Logs the activation event data to the console.
+     */
   onActivate(data: any): void {
     console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
 
+  /**
+   * onDeactivate function logs the deactivation event data to the console.
+   * @param data - The deactivation event data.
+   * Output: Logs the deactivation event data to the console.
+   */
   onDeactivate(data: any): void {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }

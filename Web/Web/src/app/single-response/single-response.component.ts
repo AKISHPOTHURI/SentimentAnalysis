@@ -8,14 +8,6 @@ import { Color, LegendPosition, ScaleType } from '@swimlane/ngx-charts';
 })
 export class SingleResponseComponent implements OnInit{
 
-  // progressValue = 90;
-
-  // getProgressBarClass(): { [key: string]: boolean } {
-  //   return {
-  //     'red-bar': this.progressValue < 50,
-  //     'green-bar': this.progressValue >= 50,
-  //   };
-  // }
   @Input() inputPercentage: number = 0; 
   @Input() inputSentiment!:number
   resposneValue:any
@@ -24,6 +16,8 @@ export class SingleResponseComponent implements OnInit{
   
   constructor() {
   } 
+
+  // Color scheme for ngx-charts, initialized with the background color array.
   colorScheme: Color = {
     name: 'Custom',
     selectable: true,
@@ -31,11 +25,13 @@ export class SingleResponseComponent implements OnInit{
     domain: this.backgroundColor
   };
   
-  ngOnInit(): void {  
+  ngOnInit(): void { 
+
+    // Define color codes for sentiment visualization.
     const red = '#A10A28';
     const green = '#5AA454';
-    console.log(this.inputSentiment);
 
+    // Set the background color based on the input sentiment value.
     if (this.inputSentiment===0) {      
       this.backgroundColor.push(red);
     } else {
@@ -43,13 +39,23 @@ export class SingleResponseComponent implements OnInit{
     }
   }
   
-  
+  /**
+   * onPercentageChange function updates the gaugeValue property when the percentage changes.
+   * @param percentage - The new percentage value.
+   * Output: Updates the gaugeValue property.
+   */
+
   onPercentageChange(percentage: number) {
-    // Update the gaugeValue when the percentage changes
     this.gaugeValue = percentage;
-    console.log(this.gaugeValue);
     
   }
+
+    /**
+   * onSelect function logs the provided event to the console when a selection occurs.
+   * @param event - The selection event.
+   * Output: Logs the event object to the console.
+   */
+  
   onSelect(event:any) {
     console.log(event);
   }
