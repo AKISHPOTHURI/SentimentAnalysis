@@ -1,5 +1,6 @@
 import os
 import pathlib
+import emoji
 from flask import request
 from flask_restx import Resource, Namespace, reqparse
 import pandas as pd
@@ -139,9 +140,10 @@ class PredictionPipeline(Resource):
 
     @ns.expect(modelarray)
     def post(self):
-        # self.config = ConfigurationManager().get_model_evaluation_config()
+        emoji.demojize(text).replace(":",'').replace("_"," ")# self.config = ConfigurationManager().get_model_evaluation_config()
         self.modelname = 'DistilBertModel'
         text = request.json['text']
+        text = emoji.demojize(text).replace(":",'').replace("_"," ")
         tok = AutoTokenizer.from_pretrained(self.modelname)
         mod = AutoModelForSequenceClassification.from_pretrained(self.modelname)
         input_ids = tok.encode(text, return_tensors='pt')
@@ -171,6 +173,7 @@ class customUploadExcel(Resource):
                  data = pd.read_excel(file_path)
                  dataValues = data['Reviews'].values
                  for review in dataValues:
+                      review = emoji.demojize(review).replace(":",'').replace("_"," ")
                       input_ids = tok.encode(review, return_tensors='pt')
                       output = mod(input_ids)
                       preds = torch.nn.functional.softmax(output.logits, dim=-1)
