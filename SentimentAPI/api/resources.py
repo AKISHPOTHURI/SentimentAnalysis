@@ -189,3 +189,11 @@ class customUploadExcel(Resource):
                  return {'error': str(e)}, 500
         return {'error': 'No file uploaded.'}, 400
 
+@ns.route('/trainModel')
+class trainModel(Resource):
+     def post(self):
+          try:
+            os.system("python main.py")
+            return {'message':'Training Done Successfully.'},200
+          except Exception as e:
+               return {'error': 'Training Failed.'}, 400
