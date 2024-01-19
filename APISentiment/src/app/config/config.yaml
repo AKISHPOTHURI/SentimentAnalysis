@@ -1,7 +1,0 @@
-artifacts_root: artifacts
-
-data_ingestion:
-  root_dir: artifacts/data_ingestion
-  source_URL: https://docs.google.com/spreadsheets/d/1msGoEZ2LNYTi6ixXkGHgR9AgWfE2IjCX/edit?usp=sharing&ouid=112541776755645667307&rtpof=true&sd=true
-  local_data_files: artifacts/data_ingestion/data.zip
-  unzip_url: artifacts/data_ingestion
