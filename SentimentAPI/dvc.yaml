@@ -10,13 +10,13 @@ stages:
   data_validation:
     cmd: python src/Sentiment/pipeline/stage_02_data_validation.py
     deps:
-      - python src/Sentiment/pipeline/stage_02_data_validation.py
+      - src/Sentiment/pipeline/stage_02_data_validation.py
       - config/config.yaml
     outs:
       - artifacts/data_validation/status.txt
 
   data_transformation:
-    cmd: src/Sentiment/pipeline/stage_03_data_transformation.py
+    cmd: python src/Sentiment/pipeline/stage_03_data_transformation.py
     deps:
       - src/Sentiment/pipeline/stage_03_data_transformation.py
       - config/config.yaml
@@ -58,6 +58,6 @@ stages:
       - src/Sentiment/pipeline/stage_05_model_evaluation.py
       - config/config.yaml
       - artifacts/data_transformation/sentimentDataset
-      - artifacts/model_trainer/LSTMModelV2.h5
+      - artifacts/model_trainer/LSTMModelV6.h5
     outs:
       - artifacts/model_evaluation/metric.txt

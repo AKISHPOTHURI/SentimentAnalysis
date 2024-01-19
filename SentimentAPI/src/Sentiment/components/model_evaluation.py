@@ -1,6 +1,7 @@
 import os
 from Sentiment import logger
-import mlflow
+from urllib.parse import urlparse
+import mlflow.keras
 import keras
 from sklearn import metrics
 from nltk.tokenize import word_tokenize
@@ -52,6 +53,27 @@ class ModelEvaluation:
             return testPadded
         except Exception as e:
             raise e
+        
+    def log_into_mlflow(self,accuracy,model):
+        mlflow.set_registry_uri(self.config.mlflow_uri)
+        tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
+        
+        with mlflow.start_run():
+            mlflow.log_params(self.config.all_params)
+            mlflow.log_metrics(
+                {"accuracy": accuracy}
+            )
+            # Model registry does not work with file store
+            if tracking_url_type_store != "file":
+
+                # Register the model
+                # There are other ways to use the Model Registry, which depends on the use case,
+                # please refer to the doc for more information:
+                # https://mlflow.org/docs/latest/model-registry.html#api-workflow
+                mlflow.keras.log_model(model,"model",registered_model_name="LSTMModel")
+            else:
+
+                mlflow.keras.log_model(model,"model")
     
     def EvaluationMetrics(self,predictions,testLabels):
         '''
@@ -62,7 +84,7 @@ class ModelEvaluation:
             return accuracyScore
         except Exception as e:
             raise e
-        
+            
     def ModelEvaluationStatus(self,accuracyScore) -> bool:
         '''
         storing the metrics results in a text file

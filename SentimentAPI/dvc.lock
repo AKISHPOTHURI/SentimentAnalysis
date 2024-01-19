@@ -1,0 +1,52 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/Sentiment/pipeline/stage_01_data_ingestion.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 0739fc1d6ed33eb9efb9761b4d63a4ce
+      size: 1119
+    - path: src/Sentiment/pipeline/stage_01_data_ingestion.py
+      hash: md5
+      md5: e75c6874864a43c23b9f9f06fb65479b
+      size: 899
+    outs:
+    - path: artifacts/data_ingestion
+      hash: md5
+      md5: 2a065c897c3603fe838cbc7df89e7ca1.dir
+      size: 151023036
+      nfiles: 2
+  data_validation:
+    cmd: python src/Sentiment/pipeline/stage_02_data_validation.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 0739fc1d6ed33eb9efb9761b4d63a4ce
+      size: 1119
+    - path: src/Sentiment/pipeline/stage_02_data_validation.py
+      hash: md5
+      md5: 945da82798f81ad6bf9401372832756f
+      size: 901
+    outs:
+    - path: artifacts/data_validation/status.txt
+      hash: md5
+      md5: 86e6a2f694c57a675b3e2da6b95ff9ba
+      size: 23
+  data_transformation:
+    cmd: python src/Sentiment/pipeline/stage_03_data_transformation.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 0739fc1d6ed33eb9efb9761b4d63a4ce
+      size: 1119
+    - path: src/Sentiment/pipeline/stage_03_data_transformation.py
+      hash: md5
+      md5: 6055d19a4639d3aecc8ef1789fa162a5
+      size: 1968
+    outs:
+    - path: artifacts/data_transformation/sentimentDataset
+      hash: md5
+      md5: 77de15591505d418e07861cfab76233c.dir
+      size: 54849800
+      nfiles: 1

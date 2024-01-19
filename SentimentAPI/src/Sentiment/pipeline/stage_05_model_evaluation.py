@@ -39,6 +39,9 @@ class ModelEvaluationPipeline:
             logger.info(f"EvaluationMetrics Started")
             accuracyScore = model_evaluation_config.EvaluationMetrics(prediction,testLabels)
             logger.info(f"EvaluationMetrics Completed")
+            logger.info(f"Updating MLFLOW started")
+            model_evaluation_config.log_into_mlflow(accuracyScore)
+            logger.info(f"Updating MLFLOW Completed")
             model_evaluation_config.ModelEvaluationStatus(accuracyScore)
             logger.info(f"EvaluationMetrics Saved")
 

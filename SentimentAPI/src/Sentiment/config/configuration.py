@@ -95,6 +95,8 @@ class ConfigurationManager:
         model_evaluation_config = ModelEvaluationConfig(
             root_dir = config.root_dir,
             METRIC_FILE = config.METRIC_FILE,
+            mlflow_uri="https://dagshub.com/AKISHPOTHURI/sentimentanalysis.mlflow",
+            all_params=self.params,
             model = config.model,
         )
 

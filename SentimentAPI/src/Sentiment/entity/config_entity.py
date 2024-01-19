@@ -48,4 +48,6 @@ class ModelTrainerConfig:
 class ModelEvaluationConfig:
     root_dir: Path
     METRIC_FILE: Path
+    mlflow_uri: str
+    all_params: dict
     model: Path
