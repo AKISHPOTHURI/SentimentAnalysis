@@ -25,9 +25,9 @@ stages:
 
 
   training:
-    cmd: python src/cnnClassifier/pipeline/stage_03_model_trainer.py
+    cmd: python src/Sentiment/pipeline/stage_04_model_training.py
     deps:
-      - src/cnnClassifier/pipeline/stage_03_model_trainer.py
+      - src/Sentiment/pipeline/stage_04_model_training.py
       - config/config.yaml
       - artifacts/data_transformation/sentimentDataset
     params:
