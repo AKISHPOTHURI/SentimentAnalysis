@@ -55,7 +55,7 @@ class ModelTrainer:
         # model initialization
         model = keras.Sequential([
             keras.layers.Embedding(self.config.vocab_size, self.config.embedding_dim, input_length=self.config.max_length),
-            keras.layers.Bidirectional(keras.layers.LSTM(self.config.units)),
+            keras.layers.Bidirectional(keras.layers.LSTM(units=self.config.units,return_sequences=True)),
             keras.layers.Bidirectional(keras.layers.LSTM(self.config.units)),
             keras.layers.Dense(self.config.dense_layers, activation=self.config.hidden_dense),
             keras.layers.Dense(self.config.last_layer, activation=self.config.last_dense)

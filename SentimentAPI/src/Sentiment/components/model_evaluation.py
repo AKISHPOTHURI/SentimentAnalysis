@@ -17,7 +17,7 @@ class ModelEvaluation:
         '''
         Model Loading from the artifacts
         '''
-        model = keras.models.load_model(os.path.join(self.config.model,"LSTMModel"+"V2"+".h5"))
+        model = keras.models.load_model(os.path.join(self.config.model,"LSTMModel"+"V6"+".h5"))
         return model
     
     def predictTest(self,testSentences,model):

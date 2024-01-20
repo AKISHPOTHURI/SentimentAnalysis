@@ -11,7 +11,7 @@ TrainingArguments:
   loss: binary_crossentropy
   optimizer: adam
   metrics: accuracy
-  num_epochs: 18
+  num_epochs: 12
   verbose: 1
   validation_split: 0.2
   dense_layers: 24

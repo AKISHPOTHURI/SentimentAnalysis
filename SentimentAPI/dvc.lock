@@ -50,3 +50,73 @@ stages:
       md5: 77de15591505d418e07861cfab76233c.dir
       size: 54849800
       nfiles: 1
+  training:
+    cmd: python src/Sentiment/pipeline/stage_04_model_training.py
+    deps:
+    - path: artifacts/data_transformation/sentimentDataset
+      hash: md5
+      md5: 77de15591505d418e07861cfab76233c.dir
+      size: 54849800
+      nfiles: 1
+    - path: config/config.yaml
+      hash: md5
+      md5: 0739fc1d6ed33eb9efb9761b4d63a4ce
+      size: 1119
+    - path: params.yaml
+      hash: md5
+      md5: 254917a8dd8c9cce45df23b857cc3af7
+      size: 459
+    - path: src/Sentiment/pipeline/stage_04_model_training.py
+      hash: md5
+      md5: 779524756fe388b6cb14e5908ae6f15f
+      size: 2016
+    params:
+      params.yaml:
+        TrainingArguments:
+          vocab_size: 3000
+          oov_tok: ''
+          embedding_dim: 100
+          max_length: 200
+          padding_type: post
+          trunc_type: post
+          units: 64
+          hidden_dense: relu
+          last_dense: sigmoid
+          loss: binary_crossentropy
+          optimizer: adam
+          metrics: accuracy
+          num_epochs: 12
+          verbose: 1
+          validation_split: 0.2
+          dense_layers: 24
+          last_layer: 1
+    outs:
+    - path: artifacts/model_trainer/LSTMModelV6.h5
+      hash: md5
+      md5: fa53b213130392237908d2d05b5c152f
+      size: 5915928
+  evaluation:
+    cmd: python src/Sentiment/pipeline/stage_05_model_evaluation.py
+    deps:
+    - path: artifacts/data_transformation/sentimentDataset
+      hash: md5
+      md5: 77de15591505d418e07861cfab76233c.dir
+      size: 54849800
+      nfiles: 1
+    - path: artifacts/model_trainer/LSTMModelV6.h5
+      hash: md5
+      md5: fa53b213130392237908d2d05b5c152f
+      size: 5915928
+    - path: config/config.yaml
+      hash: md5
+      md5: 0739fc1d6ed33eb9efb9761b4d63a4ce
+      size: 1119
+    - path: src/Sentiment/pipeline/stage_05_model_evaluation.py
+      hash: md5
+      md5: 4dc92170e0db16723fe39754f29c76a5
+      size: 2870
+    outs:
+    - path: artifacts/model_evaluation/metric.txt
+      hash: md5
+      md5: 09d7ab9b918e725f7c80a2af48be64b9
+      size: 59
