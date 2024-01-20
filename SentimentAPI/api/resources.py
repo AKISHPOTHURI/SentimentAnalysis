@@ -197,3 +197,14 @@ class trainModel(Resource):
             return {'message':'Training Done Successfully.'},200
           except Exception as e:
                return {'error': 'Training Failed.'}, 400
+
+         
+@ns.route('/trainDVC')
+class trainDVC(Resource):
+     def post(self):
+          try:
+            os.system("dvc repro")
+            return {'message':'Data and pipelines are up to date.'},200
+          except Exception as e:
+               return {'error': 'Data and pipelines Failed.'}, 400
+ 
