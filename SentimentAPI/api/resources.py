@@ -135,12 +135,8 @@ class uploadExcel(Resource):
 
 @ns.route('/Custompredict')
 class PredictionPipeline(Resource):
-    # def __init__(self):
-    #     self.config = ConfigurationManager().get_model_evaluation_config()
-
     @ns.expect(modelarray)
     def post(self):
-        emoji.demojize(text).replace(":",'').replace("_"," ")# self.config = ConfigurationManager().get_model_evaluation_config()
         self.modelname = 'DistilBertModel'
         text = request.json['text']
         text = emoji.demojize(text).replace(":",'').replace("_"," ")
