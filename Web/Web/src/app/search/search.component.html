@@ -16,9 +16,9 @@
                         <label for="color_mode" data-on="Multiple" data-off="Single"
                             class="btn-color-mode-switch-inner"></label>
                     </label>
-
+ 
                 </div>
-
+ 
                 <div class="col-lg-10 mx-auto" style="margin-top: 12%;">
                     <div class="bg-white p-5 rounded shadow" style="height: 230px; width: 525px;">
                         <form [formGroup]="singleDataForm" (submit)="onLoading(singleDataForm)" *ngIf="!showFileUpload">
@@ -44,7 +44,7 @@
                                         Text</span></button>
                             </div>
                         </div>
-
+ 
                     </div>
                 </div>
             </div>
@@ -82,15 +82,14 @@
         </div>
     </div>
     <div class="tablecontainer">
-        <ngx-skeleton-loader *ngIf="isloading" [count]="getObjectLength(multipleDataResult)"
-            appearance="line"></ngx-skeleton-loader>
         <div class="card" *ngIf="!isloading && showBulletComponent">
             <p-table [value]="multipleDataResult" id="htmlData" [tableStyle]="{ 'min-width': '50rem' }">
                 <ng-template pTemplate="caption">
                     <div class="flex">
-                        <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="SavePDF()"
+                        <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="savePDF()"
                             class="p-button-warning mr-2" pTooltip="PDF" tooltipPosition="bottom"
                             style="border-radius: 25px;"> Export as Pdf</button>
+                        <!-- <button printSectionId="htmlData" ngxPrint>print</button> -->
                         <div class="badges-table">
                             <p-button icon="bi bi-hand-thumbs-up-fill" styleClass="p-button-success"
                                 badge="{{this.count[1]}}"></p-button>
@@ -113,6 +112,30 @@
                             getData.sentiment===1?'Positive':'Negative'}}</td>
                         <td><app-single-response [inputPercentage]="getData.percentage"
                                 [inputSentiment]="getData.sentiment"></app-single-response>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="card"  *ngIf="isloading && showBulletComponent ">
+            <p-table [value]="multipleDataResult" id="htmlData" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Data</th>
+                        <th>Status</th>
+                        <th>Graphical Reports</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" *ngFor="let item of generateFake(getObjectLength(multipleDataResult))">
+                    <tr>
+                        <td>
+                            <ngx-skeleton-loader appearance="line"></ngx-skeleton-loader>
+                        </td>
+                        <td>
+                            <ngx-skeleton-loader appearance="line"></ngx-skeleton-loader>
+                        </td>
+                        <td>
+                            <ngx-skeleton-loader appearance="line"></ngx-skeleton-loader>
                         </td>
                     </tr>
                 </ng-template>

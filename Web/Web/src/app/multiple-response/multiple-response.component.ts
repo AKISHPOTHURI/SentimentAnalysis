@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
-
-
+ 
+ 
 @Component({
   selector: 'app-multiple-response',
   templateUrl: './multiple-response.component.html',
@@ -14,13 +14,13 @@ export class MultipleResponseComponent implements OnInit {
   view: any[] = [700, 400];
   positive: any
   negative: any
-
+ 
   // options
   gradient: boolean = true;
-  showLegend: boolean = true;
-  showLabels: boolean = true;
+  showLegend: boolean = false;
+  showLabels: boolean = false;
   isDoughnut: boolean = false;
-
+ 
   // Color scheme for ngx-charts, initialized with specific color codes.
   colorScheme: Color = {
     name: 'myScheme',
@@ -29,11 +29,11 @@ export class MultipleResponseComponent implements OnInit {
     domain: ['#A10A28', '#5AA454']
   };
   pieChartLabel: any;
-
+ 
   constructor() {
   }
-
-
+ 
+ 
   /**
  * The ngOnInit function is part of the Angular lifecycle hooks and is executed when the component is initialized.
  * It performs the following tasks:
@@ -44,9 +44,8 @@ export class MultipleResponseComponent implements OnInit {
  * - Converts the sentimentCounts object into an array suitable for ngx-charts.
  * Output: Updates the sentimentCounts and multiple properties with the calculated values.
  */
-
+ 
   ngOnInit(): void {
-    let totalItems = this.data.length;
     this.sentimentCounts = this.data.reduce((totals: { [key: number]: number }, item) => {
       if (item.sentiment === 1 || item.sentiment === 0) {
         totals[item.sentiment] = (totals[item.sentiment] || 0) + 1;
@@ -54,14 +53,15 @@ export class MultipleResponseComponent implements OnInit {
       return totals;
     }, { 0: 0, 1: 0 });
     for (let sentiment in this.sentimentCounts) {
-      this.sentimentCounts[sentiment] = (this.sentimentCounts[sentiment] / totalItems) * 100;
+      this.sentimentCounts[sentiment] = (this.sentimentCounts[sentiment]);
     }
     this.multiple = Object.keys(this.sentimentCounts).map(sentiment => ({
       name: sentiment === '1' ? 'Positive' : 'Negative',
       value: this.sentimentCounts[sentiment]
     }));
+ 
   }
-
+ 
   /**
      * onSelect function logs the clicked item's data to the console.
      * @param data - The data of the clicked item.
@@ -70,7 +70,7 @@ export class MultipleResponseComponent implements OnInit {
   onSelect(data: any): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }
-
+ 
   /**
      * onActivate function logs the activation event data to the console.
      * @param data - The activation event data.
@@ -79,7 +79,7 @@ export class MultipleResponseComponent implements OnInit {
   onActivate(data: any): void {
     console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
-
+ 
   /**
    * onDeactivate function logs the deactivation event data to the console.
    * @param data - The deactivation event data.
@@ -88,5 +88,5 @@ export class MultipleResponseComponent implements OnInit {
   onDeactivate(data: any): void {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
-
+ 
 }
