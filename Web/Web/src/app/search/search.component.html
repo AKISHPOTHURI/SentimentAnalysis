@@ -36,7 +36,7 @@
                         <div class="file-upload-section" *ngIf="showFileUpload">
                             <form>
                                 <div class="input_container">
-                                    <input type="file" id="fileUpload" (change)="onFileSelected($event)">
+                                    <input type="file" accept=".xlsx" id="fileUpload" (change)="onFileSelected($event)">
                                 </div>
                             </form>
                             <div class="text-center">
